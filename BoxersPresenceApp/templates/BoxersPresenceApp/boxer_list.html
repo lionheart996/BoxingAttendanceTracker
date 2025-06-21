@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <title>Boxer List</title>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/img.png' %}" alt="Gym Logo">
+        <h2>Boxers' list</h2>
+    </header>
+
+    <div class="content-container">
+        <!-- ADD BOXER FORM -->
+        <div class="form-container">
+            <h3>Add a New Boxer</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="add_boxer">Add Boxer</button>
+            </form>
+        </div>
+
+        <!-- BOXER TABLE -->
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            {% for boxer in boxers %}
+            <tr>
+                <td>{{ boxer.name }}</td>
+                <td>
+                    <a href="{% url 'boxer_report' boxer.id %}">View Report</a> |
+                    <form method="post" action="{% url 'delete_boxer' boxer.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br>
+        <a href="{% url 'mark_attendance' %}">← Back to Attendance</a>
+    </div>
+</body>
+</html>

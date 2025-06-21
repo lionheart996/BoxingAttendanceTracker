@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance by Date</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h2>Select a Date</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">View Attendance</button>
+    </form>
+
+    {% if present_boxers %}
+        <h3>Boxers Present on {{ form.cleaned_data.date }}</h3>
+        <table>
+            <tr>
+                <th>Boxer Name</th>
+            </tr>
+            {% for record in present_boxers %}
+            <tr>
+                <td>{{ record.boxer.name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

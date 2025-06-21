@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Summary</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/img.png' %}" alt="Gym Logo">
+        <h2>Attendance Summary</h2>
+    </header>
+
+    <table border="1">
+        <tr>
+            <th>Boxer</th>
+            <th>% Present</th>
+            <th>% Excused Absence</th>
+        </tr>
+        {% for row in summary %}
+        <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.present }}%</td>
+            <td>{{ row.excused }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{% url 'mark_attendance' %}">← Back to Attendance</a>
+</body>
+</html>
